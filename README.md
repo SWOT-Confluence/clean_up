@@ -15,9 +15,9 @@ Build a Docker image: `docker build -t clean_up .`
 
 ## execution
 
-`aws batch submit-job --profile confluence-dev1 --cli-input-json file://cleanup.json`
+`aws batch submit-job --profile <named_profile> --cli-input-json file://cleanup.json`
 
-cleanup.json
+where `<named_profile>` is the name of the profile defined in your AWS credential file and `cleanup.json` is a file with the following contents:
 
 ```json
 {
