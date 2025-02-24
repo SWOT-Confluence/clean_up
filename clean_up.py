@@ -57,18 +57,26 @@ def copy_s3(config_bucket, json_bucket, bucket_key):
     with tempfile.TemporaryDirectory() as temp_dir:
         data_dir = pathlib.Path(temp_dir)
         for s3_file in COPY_FILES:
-            S3.download_file(
-                config_bucket,
-                s3_file,
-                data_dir.joinpath(s3_file)
-            )
-            S3.upload_file(
-                data_dir.joinpath(s3_file),
-                json_bucket,
-                f"{bucket_key}/{s3_file}",
-                ExtraArgs={"ServerSideEncryption": "AES256"}
-            )
-            logging.info("Copied s3://%s/%s/%s.", json_bucket, bucket_key, s3_file)
+            try:
+                S3.download_file(
+                    config_bucket,
+                    s3_file,
+                    data_dir.joinpath(s3_file)
+                )
+
+                S3.upload_file(
+                    data_dir.joinpath(s3_file),
+                    json_bucket,
+                    f"{bucket_key}/{s3_file}",
+                    ExtraArgs={"ServerSideEncryption": "AES256"}
+                )
+                logging.info("Copied s3://%s/%s/%s.", json_bucket, bucket_key, s3_file)
+
+            except botocore.exceptions.ClientError as e:
+                if "404" in str(e):
+                    logging.info("Does not exist s3://%s/%s/%s.", json_bucket, bucket_key, s3_file)
+                else:
+                    logging.error("Error encountered: %s.", str(e))
 
 def create_args():
     """Create and return argparser with arguments."""
