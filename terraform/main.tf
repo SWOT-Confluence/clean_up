@@ -65,11 +65,11 @@ module "confluence-clean-up" {
   iam_execution_role_arn = data.aws_iam_role.exec.arn
   iam_job_role_arn = data.aws_iam_role.job.arn
   efs_file_system_ids = {
-    input = data.aws_efs_file_system.aws_efs_input.arn
-    flpe = data.aws_efs_file_system.flpe.arn
-    moi = data.aws_efs_file_system.moi.arn
-    diagnostics = data.aws_efs_file_system.diagnostics.arn
-    offline = data.aws_efs_file_system.offline.arn
-    logs = data.aws_efs_file_system.logs.arn
+    input = data.aws_efs_file_system.aws_efs_input.file_system_id
+    flpe = data.aws_efs_file_system.flpe.file_system_id
+    moi = data.aws_efs_file_system.moi.file_system_id
+    diagnostics = data.aws_efs_file_system.diagnostics.file_system_id
+    offline = data.aws_efs_file_system.offline.file_system_id
+    logs = data.aws_efs_file_system.logs.file_system_id
   }
 }
