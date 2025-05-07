@@ -16,16 +16,13 @@ resource "aws_batch_job_definition" "generate_batch_jd_clean_up" {
         awslogs-group = aws_cloudwatch_log_group.cw_log_group.name
       }
     }
-    resourceRequirements = [
-      {
-        type = "MEMORY"
-        value = "512"
-      },
-      {
-        type = "VCPU",
-        value = "0.25"
-      }
-    ]
+    resourceRequirements = [{
+      type = "MEMORY"
+      value = "512"
+    }, {
+      type = "VCPU",
+      value = "0.25"
+    }]
     mountPoints = [{
       sourceVolume = "input",
       containerPath = "/mnt/input"
