@@ -14,11 +14,6 @@ variable "aws_region" {
   default     = "us-west-2"
 }
 
-variable "default_tags" {
-  type        = map(string)
-  default     = {}
-}
-
 variable "efs_file_system_ids" {
   type        = map(string)
   description = "Map of EFS file system ids to pass to the container definition"
