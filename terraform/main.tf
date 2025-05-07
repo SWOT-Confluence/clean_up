@@ -1,3 +1,22 @@
+terraform {
+  backend "s3" {
+    encrypt = true
+  }
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+
+provider "aws" {
+  default_tags {
+    tags = local.default_tags
+  }
+  region  = var.aws_region
+}
+
 # Data sources
 data "aws_caller_identity" "current" {}
 
