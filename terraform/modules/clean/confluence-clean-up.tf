@@ -1,9 +1,12 @@
 # Job Definition
 resource "aws_batch_job_definition" "generate_batch_jd_clean_up" {
-  name                  = "${var.prefix}-clean-up"
-  type                  = "container"
+  name = "${var.prefix}-clean-up"
+  type = "container"
+  platform_capabilities = ["FARGATE"]
+  propagate_tags = true
+  tags = { "job_definition": "${var.prefix}-clean-up" }
 
-  container_properties  = jsonencode({
+  container_properties = jsonencode({
     image = "${local.account_id}.dkr.ecr.us-west-2.amazonaws.com/${var.prefix}-clean-up:${var.image_tag}"
     executionRoleArn = var.iam_execution_role_arn
     jobRoleArn = var.iam_job_role_arn
@@ -94,10 +97,6 @@ resource "aws_batch_job_definition" "generate_batch_jd_clean_up" {
       }
     }]
   })
-
-  platform_capabilities = ["FARGATE"]
-  propagate_tags = true
-  tags = { "job_definition": "${var.prefix}-clean-up" }
 }
 
 # Log group
