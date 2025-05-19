@@ -5,7 +5,7 @@ resource "aws_batch_job_definition" "generate_batch_jd_clean_up" {
 
   container_properties  = jsonencode({
     image = "${local.account_id}.dkr.ecr.us-west-2.amazonaws.com/${var.prefix}-clean-up:${var.image_tag}"
-    executionRoleArn = var.iam_job_role_arn
+    executionRoleArn = var.iam_execution_role_arn
     jobRoleArn = var.iam_job_role_arn
     fargatePlatformConfiguration = {
       platformVersion = "LATEST"
@@ -34,6 +34,10 @@ resource "aws_batch_job_definition" "generate_batch_jd_clean_up" {
     }, {
       sourceVolume = "moi"
       containerPath = "/mnt/moi"
+      readOnly = false
+    }, {
+      sourceVolume = "diagnostics"
+      containerPath = "/mnt/diagnostics"
       readOnly = false
     }, {
       sourceVolume = "offline"
@@ -92,7 +96,7 @@ resource "aws_batch_job_definition" "generate_batch_jd_clean_up" {
   })
 
   platform_capabilities = ["FARGATE"]
-  propagate_tags        = true
+  propagate_tags = true
   tags = { "job_definition": "${var.prefix}-clean-up" }
 }
 
