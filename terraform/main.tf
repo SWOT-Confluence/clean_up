@@ -85,6 +85,8 @@ module "confluence-clean-up" {
     moi = data.aws_efs_file_system.moi.file_system_id
     diagnostics = data.aws_efs_file_system.diagnostics.file_system_id
     offline = data.aws_efs_file_system.offline.file_system_id
+    validation = data.aws_efs_file_system.validation.file_system_id
+    output = data.aws_efs_file_system.output.file_system_id
     logs = data.aws_efs_file_system.logs.file_system_id
   }
   environment = var.environment
