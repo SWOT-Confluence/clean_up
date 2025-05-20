@@ -90,6 +90,18 @@ resource "aws_batch_job_definition" "generate_batch_jd_clean_up" {
         rootDirectory = "/"
       }
     }, {
+      name = "validation"
+      efsVolumeConfiguration = {
+        fileSystemId = var.efs_file_system_ids["validation"]
+        rootDirectory = "/"
+      }
+    }, {
+      name = "output"
+      efsVolumeConfiguration = {
+        fileSystemId = var.efs_file_system_ids["output"]
+        rootDirectory = "/"
+      }
+    }, {
       name = "logs"
       efsVolumeConfiguration = {
         fileSystemId = var.efs_file_system_ids["logs"]
