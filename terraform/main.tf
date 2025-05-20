@@ -80,7 +80,7 @@ module "confluence-clean-up" {
   app_version = var.app_version
   aws_region = var.aws_region
   efs_file_system_ids = {
-    input = data.aws_efs_file_system.aws_efs_input.file_system_id
+    input = data.aws_efs_file_system.input.file_system_id
     flpe = data.aws_efs_file_system.flpe.file_system_id
     moi = data.aws_efs_file_system.moi.file_system_id
     diagnostics = data.aws_efs_file_system.diagnostics.file_system_id
